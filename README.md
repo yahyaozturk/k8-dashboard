@@ -1,3 +1,5 @@
+[![Build Status](https://dev.azure.com/yahyaozturk/K8-Dashboard/_apis/build/status/yahyaozturk.k8-dashboard?branchName=master)](https://dev.azure.com/yahyaozturk/K8-Dashboard/_build/latest?definitionId=1&branchName=master)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
