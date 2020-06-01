@@ -6,6 +6,7 @@ import MenuVertical from "./menu";
 import WorkloadOverview from "./workload-overview";
 import PodTable from "./pod-table";
 import DeploymentTable from "./deployment-table";
+import DeamonsetTable from "./deamonset-table";
 
 export default class DashboardLayout extends React.Component {
   state = { activeItem: "home" };
@@ -32,6 +33,9 @@ export default class DashboardLayout extends React.Component {
         break;
       case "deployments":
         content = <DeploymentTable></DeploymentTable>;
+        break;
+      case "deamonsets":
+        content = <DeamonsetTable></DeamonsetTable>;
         break;
 
       default:
