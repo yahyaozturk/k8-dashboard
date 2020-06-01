@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Statistic } from "semantic-ui-react";
 
 import { ResourceFactory } from "../actions/resources";
@@ -35,3 +36,7 @@ export default class ResourceStatistic extends React.Component {
     );
   }
 }
+
+ResourceStatistic.propTypes = {
+  resourceType: PropTypes.object,
+};
