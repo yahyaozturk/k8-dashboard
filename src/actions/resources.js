@@ -37,7 +37,7 @@ class EndpointManager {
     if (resourceName != null) {
       url = url.split("{name}").join(resourceName);
     } else {
-      url = url.split("{name}").join("");
+      url = url.split("/{name}").join("");
     }
 
     return url;
