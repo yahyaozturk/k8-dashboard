@@ -20,6 +20,8 @@ class NodeList extends React.Component {
     this._isMounted = true;
     const nodes = await ResourceFactory.getResources(ResourceType.Node);
 
+    console.log(nodes);
+
     if (this._isMounted) {
       this.setState({ nodes: nodes.resourceList.items });
     }
