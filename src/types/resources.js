@@ -7,6 +7,10 @@ const ResourceType = Object.freeze({
     kind: "nodes",
     apiURL: "/api/v1/nodes/{name}",
   },
+  Pv: {
+    kind: "persistentvolumes",
+    apiURL: "/api/v1/persistentvolumes/{name}",
+  },
   Deployment: {
     kind: "deployments",
     apiURL: "/apis/apps/v1/namespaces/{namespace}/deployments/{name}",

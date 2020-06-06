@@ -7,6 +7,7 @@ import WorkloadOverview from "./workload-overview";
 import PodTable from "./pod-table";
 import DeploymentTable from "./deployment-table";
 import DeamonsetTable from "./deamonset-table";
+import PVList from "./pv-list";
 
 export default class DashboardLayout extends React.Component {
   state = { activeItem: "home" };
@@ -36,6 +37,9 @@ export default class DashboardLayout extends React.Component {
         break;
       case "deamonsets":
         content = <DeamonsetTable></DeamonsetTable>;
+        break;
+      case "persistent-volumes":
+        content = <PVList></PVList>;
         break;
 
       default:
