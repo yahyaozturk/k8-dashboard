@@ -3,9 +3,9 @@ WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 RUN apk add yarn
 ENV PATH $PATH:/opt/yarn/bin
-COPY package.json ./
+COPY frontend/package.json ./
 RUN yarn install
-COPY . ./
+COPY frontend/. ./
 RUN yarn run build
 
 # production environment
