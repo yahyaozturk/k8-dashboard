@@ -8,6 +8,7 @@ import PodTable from "./pod-table";
 import DeploymentTable from "./deployment-table";
 import DeamonsetTable from "./deamonset-table";
 import PVList from "./pv-list";
+import BarGraph from "./view";
 
 export default class DashboardLayout extends React.Component {
   state = { activeItem: "home" };
@@ -40,6 +41,9 @@ export default class DashboardLayout extends React.Component {
         break;
       case "persistent-volumes":
         content = <PVList></PVList>;
+        break;
+      case "secrets":
+        content = <BarGraph width="1450" height="700"></BarGraph>;
         break;
 
       default:

@@ -6,6 +6,13 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "@vx/gradient": "0.0.197",
+    "@vx/group": "0.0.197",
+    "@vx/hierarchy": "0.0.197",
+    "@vx/mock-data": "0.0.197",
+    "@vx/scale": "0.0.197",
+    "@vx/shape": "0.0.197",
+    "@vx/vx": "0.0.197",
     "axios": "^0.19.2",
     "flow-bin": "^0.125.1",
     "lodash": "^4.17.15",
@@ -14,7 +21,8 @@
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
     "semantic-ui-css": "^2.4.1",
-    "semantic-ui-react": "^0.88.2"
+    "semantic-ui-react": "^0.88.2",
+    "websocket-extensions": "^0.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
