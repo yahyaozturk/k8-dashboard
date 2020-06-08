@@ -31,5 +31,5 @@ steps:
       tags: |
         $(Build.BuildNumber)
         latest
-      Dockerfile: "**/build/dockerfile"
+      Dockerfile: "**/dockerfile"
       repository: "yahyaozturk/k8-dashboard"
