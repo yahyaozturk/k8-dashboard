@@ -3,8 +3,23 @@ module github.com/yahyaozturk/k8-dashboard
 go 1.14
 
 require (
+	github.com/gogo/protobuf v1.3.1 // indirect
+	github.com/google/gofuzz v1.1.0 // indirect
+	github.com/googleapis/gnostic v0.4.2 // indirect
 	github.com/gorilla/mux v1.7.4
-	k8s.io/api v0.0.0-20191114100352-16d7abae0d2a
-	k8s.io/apimachinery v0.0.0-20191028221656-72ed19daf4bb
-	k8s.io/client-go v0.0.0-20191114101535-6c5935290e33
+	github.com/imdario/mergo v0.3.9 // indirect
+	github.com/json-iterator/go v1.1.9 // indirect
+	github.com/modern-go/reflect2 v1.0.1 // indirect
+	github.com/spf13/pflag v1.0.5 // indirect
+	golang.org/x/crypto v0.0.0-20200604202706-70a84ac30bf9 // indirect
+	golang.org/x/net v0.0.0-20200602114024-627f9648deb9 // indirect
+	golang.org/x/oauth2 v0.0.0-20200107190931-bf48bf16ab8d // indirect
+	golang.org/x/time v0.0.0-20200416051211-89c76fbcd5d1 // indirect
+	gopkg.in/inf.v0 v0.9.1 // indirect
+	k8s.io/api v0.0.0-20191004102349-159aefb8556b
+	k8s.io/apimachinery v0.0.0-20191004074956-c5d2f014d689
+	k8s.io/client-go v11.0.1-0.20191004102930-01520b8320fc+incompatible
+	k8s.io/klog v1.0.0 // indirect
+	k8s.io/utils v0.0.0-20200603063816-c1c6865ac451 // indirect
+	sigs.k8s.io/yaml v1.2.0 // indirect
 )

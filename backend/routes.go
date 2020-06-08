@@ -132,7 +132,6 @@ func getPVDetails(resp http.ResponseWriter, req *http.Request) {
 	resp.Write(response)	
 }
 
-
 func getNodes(resp http.ResponseWriter, req *http.Request) {
 	
 	resource, err := clientset.CoreV1().Nodes().List(metav1.ListOptions{})

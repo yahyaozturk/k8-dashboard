@@ -6,17 +6,23 @@ package main
 //
 
 import (
+
+	"flag"
 	"fmt"
 	"log"
-	"net/http"
 	"os"
 	"path/filepath"
+	"net/http"
 	"strings"
-	"flag"
 
-	"github.com/gorilla/mux"
+
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/clientcmd"
+	"k8s.io/client-go/util/homedir"
+
+
+	"github.com/gorilla/mux"
+
 
 )
 
@@ -43,23 +49,20 @@ func main() {
 	log.Println("### Connecting to Kubernetes...")
 
 	var kubeconfig *string
-	if home := homeDir(); home != "" {
+	if home := homedir.HomeDir(); home != "" {
 		kubeconfig = flag.String("kubeconfig", filepath.Join(home, ".kube", "config"), "(optional) absolute path to the kubeconfig file")
 	} else {
 		kubeconfig = flag.String("kubeconfig", "", "absolute path to the kubeconfig file")
 	}
 	flag.Parse()
 
-	// use the current context in kubeconfig
 	config, err := clientcmd.BuildConfigFromFlags("", *kubeconfig)
 	if err != nil {
-		panic(err.Error())
+		panic(err)
 	}
-
-	// create the clientset
 	clientset, err = kubernetes.NewForConfig(config)
 	if err != nil {
-		panic(err.Error())
+		panic(err)
 	}
 
 	// Use gorilla/mux for routing
