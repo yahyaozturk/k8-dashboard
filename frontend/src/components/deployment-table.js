@@ -3,15 +3,15 @@ import React from "react";
 import { ResourceFactory } from "../actions/resources";
 import ResourceType from "../types/resources";
 import moment from "moment";
-import { Table } from "semantic-ui-react";
+import { Table, Header, Label } from "semantic-ui-react";
 
 const headers = [
-  { key: "name", name: "Name" },
-  { key: "namespace", name: "Namespace" },
-  { key: "pods", name: "Pods" },
-  { key: "replicas", name: "Replicas" },
-  { key: "age", name: "Age" },
-  { key: "conditions", name: "Conditions" },
+  { key: "namespace", name: "Namespace", sortable: true },
+  { key: "name", name: "Name", sortable: true },
+  { key: "ready", name: "Ready" },
+  { key: "available", name: "Available" },
+  { key: "labels", name: "Labels" },
+  { key: "age", name: "Age", sortable: true },
 ];
 
 export default class DeploymentTable extends React.Component {
@@ -41,29 +41,37 @@ export default class DeploymentTable extends React.Component {
   };
 
   async componentDidMount() {
-    const deployments = await ResourceFactory.getResources(
+    const deploymentRestResult = await ResourceFactory.getResources(
       ResourceType.Deployment
     );
-
-    const deploymentTableData = deployments.resourceList.items.map(
+    const deployments = _.map(
+      deploymentRestResult.resourceList.items,
       (deployment) => ({
-        name: deployment.metadata.name,
         namespace: deployment.metadata.namespace,
-        pods:
+        name: deployment.metadata.name,
+
+        ready:
           deployment.spec.replicas -
           (_.hasIn(deployment, "status.unavailableReplicas")
             ? deployment.status.unavailableReplicas
             : 0) +
           "/" +
           deployment.spec.replicas,
-        replicas: deployment.spec.replicas,
+
+        available: _.hasIn(deployment, "status.availableReplicas")
+          ? deployment.status.availableReplicas
+          : 0,
+
+        labels: deployment.metadata.labels,
+
         age: moment(deployment.metadata.creationTimestamp).fromNow(),
-        conditions: _.map(deployment.status.conditions, "type"),
+
+        rawData: deployment,
       })
     );
 
     this.setState({
-      data: deploymentTableData,
+      data: deployments,
     });
   }
 
@@ -74,11 +82,11 @@ export default class DeploymentTable extends React.Component {
       <Table sortable celled fixed inverted padded>
         <Table.Header>
           <Table.Row>
-            {_.map(headers, ({ key, name }) => (
+            {_.map(headers, ({ key, name, sortable }) => (
               <Table.HeaderCell
                 key={"header-" + key}
                 sorted={column === key ? direction : null}
-                onClick={this.handleSort(key)}
+                onClick={sortable ? this.handleSort(key) : null}
               >
                 {name}
               </Table.HeaderCell>
@@ -87,8 +95,28 @@ export default class DeploymentTable extends React.Component {
         </Table.Header>
 
         <Table.Body>
-          {_.map(data, (row) => (
-            <Table.Row key={row.name} cells={Object.values(row)}></Table.Row>
+          {_.map(data, (deployment) => (
+            <Table.Row key={deployment.namespace + "-" + deployment.name}>
+              <Table.Cell>
+                <Header as="h2" textAlign="center" inverted>
+                  {deployment.namespace}
+                </Header>
+              </Table.Cell>
+              <Table.Cell>{deployment.name}</Table.Cell>
+              <Table.Cell>{deployment.ready}</Table.Cell>
+              <Table.Cell>{deployment.available}</Table.Cell>
+              <Table.Cell>
+                <Label.Group color="teal">
+                  {_.map(deployment.labels, (value, key) => (
+                    <Label key={key} size="tiny" as="a">
+                      {key}
+                      <Label.Detail>{value}</Label.Detail>
+                    </Label>
+                  ))}
+                </Label.Group>
+              </Table.Cell>
+              <Table.Cell>{deployment.age}</Table.Cell>
+            </Table.Row>
           ))}
         </Table.Body>
       </Table>
