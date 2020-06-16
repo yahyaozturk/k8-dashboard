@@ -39,6 +39,14 @@ export default class PVList extends React.Component {
               {pv.spec.capacity.storage}
             </Card.Content>
             <Card.Content extra>
+              <Icon name="write" />
+              {_.map(pv.spec.accessModes, (accessMode) => (
+                <Label key={accessMode} size="tiny" as="a">
+                  {accessMode}
+                </Label>
+              ))}
+            </Card.Content>
+            <Card.Content extra>
               <Icon name="stopwatch" />
               {moment(pv.metadata.creationTimestamp).fromNow()}
             </Card.Content>

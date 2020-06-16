@@ -73,8 +73,6 @@ export default class DeamonsetTable extends React.Component {
   render() {
     const { column, data, direction } = this.state;
 
-    console.log(data);
-
     return (
       <Table sortable celled fixed inverted padded>
         <Table.Header>
