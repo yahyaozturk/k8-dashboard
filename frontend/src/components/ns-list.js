@@ -1,3 +1,4 @@
+import _ from "lodash";
 import React from "react";
 import { Grid, Card, Label, List, Icon } from "semantic-ui-react";
 import { ResourceFactory } from "../actions/resources";
@@ -25,24 +26,6 @@ class NamespaceList extends React.Component {
 
   render() {
     return this.state.namespaces.map((ns) => {
-      const age = moment(ns.metadata.creationTimestamp).fromNow();
-      let labels = new Map();
-
-      if (Object.keys(ns.metadata).indexOf("labels") > -1) {
-        Object.keys(ns.metadata.labels).forEach(function eachKey(key) {
-          labels.set(
-            <List.Item>
-              <Label size="tiny" as="a" color="teal">
-                {key}
-                <Label.Detail>{ns.metadata.labels[key]}</Label.Detail>
-              </Label>
-            </List.Item>
-          );
-        });
-      } else {
-        labels.set(<div></div>);
-      }
-
       return (
         <Grid.Column key={ns.metadata.uid} width={4}>
           <Card fluid>
@@ -55,12 +38,19 @@ class NamespaceList extends React.Component {
             </Card.Content>
             <Card.Content extra>
               <Icon name="stopwatch" />
-              {age}
+              {moment(ns.metadata.creationTimestamp).fromNow()}
             </Card.Content>
             <Card.Content extra>
               <Card.Header>Labels</Card.Header>
               <List divided selection>
-                {labels}
+                <Label.Group color="teal">
+                  {_.map(ns.metadata.labels, (value, key) => (
+                    <Label key={key} size="tiny" as="a">
+                      {key}
+                      <Label.Detail>{value}</Label.Detail>
+                    </Label>
+                  ))}
+                </Label.Group>
               </List>
             </Card.Content>
           </Card>

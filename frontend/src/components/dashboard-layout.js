@@ -8,10 +8,11 @@ import PodTable from "./pod-table";
 import DeploymentTable from "./deployment-table";
 import DeamonsetTable from "./deamonset-table";
 import PVList from "./pv-list";
-import BarGraph from "./view";
+import Example from "./view";
+import ParentSize from "@vx/responsive/lib/components/ParentSize";
 
 export default class DashboardLayout extends React.Component {
-  state = { activeItem: "home" };
+  state = { activeItem: "overview" };
   handleItemClick = (e, { name }) => {
     this.setState({ activeItem: name });
   };
@@ -43,7 +44,11 @@ export default class DashboardLayout extends React.Component {
         content = <PVList></PVList>;
         break;
       case "secrets":
-        content = <BarGraph width="1450" height="700"></BarGraph>;
+        content = (
+          <ParentSize>
+            {({ width, height }) => <Example width={width} height="700" />}
+          </ParentSize>
+        );
         break;
 
       default:

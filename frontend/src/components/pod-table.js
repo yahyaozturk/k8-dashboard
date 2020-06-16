@@ -9,7 +9,7 @@ const headers = [
   { key: "namespace", name: "Namespace", sortable: true },
   { key: "name", name: "Name", sortable: true },
   { key: "ready", name: "Ready" },
-  { key: "restarts", name: "Restarts" },
+  { key: "restarts", name: "Restarts", sortable: true },
   { key: "containers", name: "Containers" },
   { key: "controlledBy", name: "Controlled By" },
   { key: "labels", name: "Labels" },
@@ -59,10 +59,10 @@ export default class PodTable extends React.Component {
         pod.spec.containers.length,
 
       restarts: _.hasIn(pod, "status.containerStatuses")
-        ? _.map(pod.status.containerStatuses, function (o) {
+        ? _.sumBy(pod.status.containerStatuses, function (o) {
             return o.restartCount;
           })
-        : "-",
+        : 0,
 
       containers: pod.spec.containers,
 
@@ -117,9 +117,7 @@ export default class PodTable extends React.Component {
               <Table.Cell>{row.ready}</Table.Cell>
 
               <Table.Cell>
-                <Label.Group color="teal">
-                  {_.map(row.restarts, (restart) => restart)}
-                </Label.Group>
+                <Label.Group color="teal">{row.restarts}</Label.Group>
               </Table.Cell>
 
               <Table.Cell>

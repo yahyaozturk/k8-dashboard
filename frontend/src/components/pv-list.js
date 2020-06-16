@@ -1,3 +1,4 @@
+import _ from "lodash";
 import React from "react";
 import { Grid, Card, Label, List, Icon } from "semantic-ui-react";
 import { ResourceFactory } from "../actions/resources";
@@ -12,8 +13,6 @@ export default class PVList extends React.Component {
     this._isMounted = true;
     const pvs = await ResourceFactory.getResources(ResourceType.Pv);
 
-    console.log(pvs);
-
     if (this._isMounted) {
       this.setState({ pvs: pvs.resourceList.items });
     }
@@ -25,24 +24,6 @@ export default class PVList extends React.Component {
 
   render() {
     return this.state.pvs.map((pv) => {
-      const age = moment(pv.metadata.creationTimestamp).fromNow();
-      let annotations = new Map();
-
-      if (Object.keys(pv.metadata).indexOf("annotations") > -1) {
-        Object.keys(pv.metadata.annotations).forEach(function eachKey(key) {
-          annotations.set(
-            <List.Item>
-              <Label size="tiny" as="a" color="teal">
-                {key}
-                <Label.Detail>{pv.metadata.annotations[key]}</Label.Detail>
-              </Label>
-            </List.Item>
-          );
-        });
-      } else {
-        annotations.set(<div></div>);
-      }
-
       return (
         <Grid.Column key={pv.metadata.uid} width={4}>
           <Card fluid>
@@ -59,12 +40,19 @@ export default class PVList extends React.Component {
             </Card.Content>
             <Card.Content extra>
               <Icon name="stopwatch" />
-              {age}
+              {moment(pv.metadata.creationTimestamp).fromNow()}
             </Card.Content>
             <Card.Content extra>
               <Card.Header>Annotations</Card.Header>
               <List divided selection>
-                {annotations}
+                <Label.Group color="teal">
+                  {_.map(pv.metadata.annotations, (value, key) => (
+                    <Label key={key} size="tiny" as="a">
+                      {key}
+                      <Label.Detail>{value}</Label.Detail>
+                    </Label>
+                  ))}
+                </Label.Group>
               </List>
             </Card.Content>
           </Card>
