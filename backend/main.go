@@ -89,6 +89,14 @@ func main() {
 	router.HandleFunc("/api/v1/namespaces/{namespace}/pods", getPodByNamespace)
 	router.HandleFunc("/api/v1/namespaces/{namespace}/pods/{name}", getPodDetails)
 
+	router.HandleFunc("/api/v1/services", getServices)
+	router.HandleFunc("/api/v1/namespaces/{namespace}/services", getServiceByNamespace)
+	router.HandleFunc("/api/v1/namespaces/{namespace}/services/{name}", getServiceDetails)
+
+	router.HandleFunc("/apis/networking.k8s.io/v1beta1/ingresses", getIngresses)
+	router.HandleFunc("/apis/networking.k8s.io/v1beta1/namespaces/{namespace}/ingresses", getIngressByNamespace)
+	router.HandleFunc("/apis/networking.k8s.io/v1beta1/namespaces/{namespace}/ingresses/{name}", getIngressDetails)
+
 	router.HandleFunc("/apis/apps/v1/deployments", getDeployments)
 	router.HandleFunc("/apis/apps/v1/namespaces/{namespace}/deployments", getDeploymentByNamespace)
 	router.HandleFunc("/apis/apps/v1/namespaces/{namespace}/deployments/{name}", getDeploymentDetails)

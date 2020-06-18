@@ -140,6 +140,18 @@ func getNodes(resp http.ResponseWriter, req *http.Request) {
 		http.Error(resp, err.Error(), http.StatusInternalServerError)
 	}
 
+/*
+	for _, node := range resource.Items {
+		log.Println("############## "+node.Name+" ################")
+		for _, image := range node.Status.Images {
+			log.Println(image.Names[0])
+		}
+		log.Println("############## END OF IMAGES ################")
+		
+		
+	}
+*/
+
 	response, _ := json.Marshal(resource)
 	resp.Write(response)
 
@@ -202,6 +214,93 @@ func getPodDetails(resp http.ResponseWriter, req *http.Request) {
 	response, _ := json.Marshal(resource)
 	resp.Write(response)
 }
+
+func getServices(resp http.ResponseWriter, req *http.Request) {
+
+	resource, err := clientset.CoreV1().Services(metav1.NamespaceAll).List(metav1.ListOptions{})
+	if err != nil {
+		log.Println("### Kubernetes API error", err.Error())
+		http.Error(resp, err.Error(), http.StatusInternalServerError)
+	}
+
+	response, _ := json.Marshal(resource)
+	resp.Write(response)
+}
+
+func getServiceByNamespace(resp http.ResponseWriter, req *http.Request) {
+
+	params := mux.Vars(req)
+	namespace := params["namespace"]
+
+	resource, err := clientset.CoreV1().Services(namespace).List(metav1.ListOptions{})
+	if err != nil {
+		log.Println("### Kubernetes API error", err.Error())
+		http.Error(resp, err.Error(), http.StatusInternalServerError)
+	}
+
+	response, _ := json.Marshal(resource)
+	resp.Write(response)
+}
+
+func getServiceDetails(resp http.ResponseWriter, req *http.Request) {
+
+	params := mux.Vars(req)
+	namespace := params["namespace"]
+	name := params["name"]
+
+	resource, err := clientset.CoreV1().Services(namespace).Get(name,metav1.GetOptions{})
+	if err != nil {
+		log.Println("### Kubernetes API error", err.Error())
+		http.Error(resp, err.Error(), http.StatusInternalServerError)
+	}
+
+	response, _ := json.Marshal(resource)
+	resp.Write(response)
+}
+
+func getIngresses(resp http.ResponseWriter, req *http.Request) {
+
+	resource, err := clientset.NetworkingV1beta1().Ingresses(metav1.NamespaceAll).List(metav1.ListOptions{})
+	if err != nil {
+		log.Println("### Kubernetes API error", err.Error())
+		http.Error(resp, err.Error(), http.StatusInternalServerError)
+	}
+
+	response, _ := json.Marshal(resource)
+	resp.Write(response)
+}
+
+func getIngressByNamespace(resp http.ResponseWriter, req *http.Request) {
+
+	params := mux.Vars(req)
+	namespace := params["namespace"]
+
+	resource, err := clientset.NetworkingV1beta1().Ingresses(namespace).List(metav1.ListOptions{})
+	if err != nil {
+		log.Println("### Kubernetes API error", err.Error())
+		http.Error(resp, err.Error(), http.StatusInternalServerError)
+	}
+
+	response, _ := json.Marshal(resource)
+	resp.Write(response)
+}
+
+func getIngressDetails(resp http.ResponseWriter, req *http.Request) {
+
+	params := mux.Vars(req)
+	namespace := params["namespace"]
+	name := params["name"]
+
+	resource, err := clientset.NetworkingV1beta1().Ingresses(namespace).Get(name,metav1.GetOptions{})
+	if err != nil {
+		log.Println("### Kubernetes API error", err.Error())
+		http.Error(resp, err.Error(), http.StatusInternalServerError)
+	}
+
+	response, _ := json.Marshal(resource)
+	resp.Write(response)
+}
+
 
 func getEvents(resp http.ResponseWriter, req *http.Request) {
 
