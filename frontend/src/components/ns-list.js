@@ -2,7 +2,7 @@ import _ from "lodash";
 import React from "react";
 import { Grid, Card, Label, List, Icon } from "semantic-ui-react";
 import { ResourceFactory } from "../actions/resources";
-import ResourceType from "../types/resources";
+import { ResourceType, MetaV1 } from "../types/resources";
 import moment from "moment";
 
 class NamespaceList extends React.Component {
@@ -11,9 +11,10 @@ class NamespaceList extends React.Component {
 
   async componentDidMount() {
     this._isMounted = true;
-    const namespaces = await ResourceFactory.getResources(
-      ResourceType.Namespace
-    );
+    const namespaces = await new ResourceFactory(
+      ResourceType.Namespace,
+      MetaV1.namespaceAll
+    ).List();
 
     if (this._isMounted) {
       this.setState({ namespaces: namespaces.resourceList.items });

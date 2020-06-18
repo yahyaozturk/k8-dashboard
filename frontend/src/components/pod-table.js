@@ -1,7 +1,7 @@
 import _ from "lodash";
 import React from "react";
 import { ResourceFactory } from "../actions/resources";
-import ResourceType from "../types/resources";
+import { ResourceType, MetaV1 } from "../types/resources";
 import moment from "moment";
 import { Table, Header, Label } from "semantic-ui-react";
 
@@ -44,7 +44,10 @@ export default class PodTable extends React.Component {
   };
 
   async componentDidMount() {
-    const podsRestResult = await ResourceFactory.getResources(ResourceType.Pod);
+    const podsRestResult = await new ResourceFactory(
+      ResourceType.Pod,
+      MetaV1.namespaceAll
+    ).List();
 
     const pods = _.map(podsRestResult.resourceList.items, (pod) => ({
       namespace: pod.metadata.namespace,

@@ -1,7 +1,7 @@
 import _ from "lodash";
 import React from "react";
 import { ResourceFactory } from "../actions/resources";
-import ResourceType from "../types/resources";
+import { ResourceType, MetaV1 } from "../types/resources";
 import moment from "moment";
 import { Table, Header, Label } from "semantic-ui-react";
 
@@ -41,9 +41,10 @@ export default class DeploymentTable extends React.Component {
   };
 
   async componentDidMount() {
-    const deploymentRestResult = await ResourceFactory.getResources(
-      ResourceType.Deployment
-    );
+    const deploymentRestResult = await new ResourceFactory(
+      ResourceType.Deployment,
+      MetaV1.namespaceAll
+    ).List();
     const deployments = _.map(
       deploymentRestResult.resourceList.items,
       (deployment) => ({

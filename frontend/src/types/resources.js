@@ -1,4 +1,4 @@
-const ResourceType = Object.freeze({
+export const ResourceType = Object.freeze({
   Namespace: {
     kind: "namespaces",
     apiURL: "/api/v1/namespaces/{name}",
@@ -59,4 +59,7 @@ const ResourceType = Object.freeze({
   },
 });
 
-export default ResourceType;
+export const MetaV1 = Object.freeze({
+  namespaceAll: "all-namespaces",
+  namespaceDefault: "",
+});

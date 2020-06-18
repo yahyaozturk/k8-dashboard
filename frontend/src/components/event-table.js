@@ -1,7 +1,7 @@
 import _ from "lodash";
 import React from "react";
 import { ResourceFactory } from "../actions/resources";
-import ResourceType from "../types/resources";
+import { ResourceType, MetaV1 } from "../types/resources";
 import moment from "moment";
 import { Table } from "semantic-ui-react";
 
@@ -42,7 +42,10 @@ export default class EventTable extends React.Component {
   };
 
   async componentDidMount() {
-    const events = await ResourceFactory.getResources(ResourceType.Event);
+    const events = await new ResourceFactory(
+      ResourceType.Event,
+      MetaV1.namespaceAll
+    ).List();
 
     const eventTableData = events.resourceList.items.map((event) => ({
       message: event.message,

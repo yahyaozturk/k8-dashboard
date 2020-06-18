@@ -1,7 +1,7 @@
 import _ from "lodash";
 import React from "react";
 import { ResourceFactory } from "../actions/resources";
-import ResourceType from "../types/resources";
+import { ResourceType, MetaV1 } from "../types/resources";
 import moment from "moment";
 import { Table, Header, Label } from "semantic-ui-react";
 
@@ -43,9 +43,10 @@ export default class DeamonsetTable extends React.Component {
   };
 
   async componentDidMount() {
-    const deamonsetRestResult = await ResourceFactory.getResources(
-      ResourceType.DeamonSet
-    );
+    const deamonsetRestResult = await new ResourceFactory(
+      ResourceType.DeamonSet,
+      MetaV1.namespaceAll
+    ).List();
 
     const deamonsets = _.map(
       deamonsetRestResult.resourceList.items,

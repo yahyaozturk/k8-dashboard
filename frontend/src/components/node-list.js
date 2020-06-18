@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid, Card, Icon } from "semantic-ui-react";
 import { ResourceFactory } from "../actions/resources";
-import ResourceType from "../types/resources";
+import { ResourceType, MetaV1 } from "../types/resources";
 import moment from "moment";
 
 class NodeList extends React.Component {
@@ -18,7 +18,10 @@ class NodeList extends React.Component {
 
   async componentDidMount() {
     this._isMounted = true;
-    const nodes = await ResourceFactory.getResources(ResourceType.Node);
+    const nodes = await new ResourceFactory(
+      ResourceType.Node,
+      MetaV1.namespaceAll
+    ).List();
 
     if (this._isMounted) {
       this.setState({ nodes: nodes.resourceList.items });

@@ -8,7 +8,7 @@ import PodTable from "./pod-table";
 import DeploymentTable from "./deployment-table";
 import DeamonsetTable from "./deamonset-table";
 import PVList from "./pv-list";
-import Example from "./view";
+import ResourceReleationTree from "./resource-relation-tree";
 import ParentSize from "@vx/responsive/lib/components/ParentSize";
 
 export default class DashboardLayout extends React.Component {
@@ -46,7 +46,9 @@ export default class DashboardLayout extends React.Component {
       case "secrets":
         content = (
           <ParentSize>
-            {({ width, height }) => <Example width={width} height="700" />}
+            {({ width, height }) => (
+              <ResourceReleationTree width={width} height={700} />
+            )}
           </ParentSize>
         );
         break;

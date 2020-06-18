@@ -10,9 +10,10 @@ export default class ResourceStatistic extends React.Component {
 
   async componentDidMount() {
     this._isMounted = true;
-    const resources = await ResourceFactory.getResources(
-      this.props.resourceType
-    );
+    const resources = await new ResourceFactory(
+      this.props.resourceType,
+      this.props.ns
+    ).List();
 
     if (this._isMounted) {
       this.setState({

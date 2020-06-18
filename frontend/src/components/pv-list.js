@@ -2,7 +2,7 @@ import _ from "lodash";
 import React from "react";
 import { Grid, Card, Label, List, Icon } from "semantic-ui-react";
 import { ResourceFactory } from "../actions/resources";
-import ResourceType from "../types/resources";
+import { ResourceType, MetaV1 } from "../types/resources";
 import moment from "moment";
 
 export default class PVList extends React.Component {
@@ -11,7 +11,10 @@ export default class PVList extends React.Component {
 
   async componentDidMount() {
     this._isMounted = true;
-    const pvs = await ResourceFactory.getResources(ResourceType.Pv);
+    const pvs = await new ResourceFactory(
+      ResourceType.Pv,
+      MetaV1.namespaceAll
+    ).List();
 
     if (this._isMounted) {
       this.setState({ pvs: pvs.resourceList.items });

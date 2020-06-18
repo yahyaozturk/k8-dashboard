@@ -12,7 +12,7 @@ export interface IErrStatus {
 }
 
 export interface ITypeMeta {
-  kind: string;
+  kind: string | null;
 }
 
 export interface IListMeta {
